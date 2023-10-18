@@ -1,5 +1,7 @@
 package app;
 
+import item.menu.controller.MenuController;
+import item.menu.service.MenuService;
 import item.menu.view.MenuView;
 
 import java.util.Scanner;
@@ -8,6 +10,7 @@ public class Application implements AutoCloseable {
     private static Application instance;
 
     private final Scanner scn = new Scanner(System.in);
+    private final MenuController menuController = new MenuController(new MenuService(), new MenuView());
 
     private Application() {
     }
@@ -24,10 +27,9 @@ public class Application implements AutoCloseable {
     }
 
     public void runKiosk() throws Exception {
-        MenuView.printMenu();
-
-        String menuInput = scn.next();
-        System.out.println("입력 사용자 값 == " + menuInput);
+        String menus = menuController.getMenus();
+        System.out.println(menus);
+        System.out.println("사용자 입력 : " + scn.next());
     }
 
     @Override

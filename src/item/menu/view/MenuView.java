@@ -1,12 +1,11 @@
 package item.menu.view;
 
+import common.View;
 import item.menu.entity.Menu;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MenuView {
-    private final static List<Menu> menus = new ArrayList<>();
+public class MenuView implements View {
     private final static String welcomeText = "\"SHAKESHACK BURGER 에 오신걸 환영합니다.\"\n" +
             "아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n" +
             "\n" +
@@ -21,22 +20,16 @@ public class MenuView {
             "6. Cancel      | 진행중인 주문을 취소합니다.";
 
     public static void printMenu() {
-        initMenu();
-
         System.out.println(welcomeText);
         System.out.println("====================================");
     }
 
-    public static void initMenu() {
-        if (menus.isEmpty()) {
-            menus.add(new Menu.Builder().name("Burgers").description("앵거스 비프 통살을 다져 만든 버거").build());
-            menus.add(new Menu.Builder().name("Forzen Custard").description("매장에서 신선하게 만드는 아이스크림").build());
-            menus.add(new Menu.Builder().name("Drinks").description("매장에서 직접 만드는 음료").build());
-            menus.add(new Menu.Builder().name("Beer").description("뉴욕 브루클린 브루어리에서 양조한 맥주").build());
-        }
+    public String getView(List<Menu> itemMenus, List<Menu> orderMenus) {
+        return welcomeText;
     }
 
-    public static List<Menu> getMenus() {
-        return menus;
+    @Override
+    public String getView() {
+        return welcomeText;
     }
 }

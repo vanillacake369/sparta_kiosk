@@ -15,7 +15,7 @@ public class Product implements Item {
 
     @Override
     public String getDescription() {
-        return description
+        return description;
     }
 
     public Long getPrice() {
