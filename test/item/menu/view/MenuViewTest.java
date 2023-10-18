@@ -1,6 +1,5 @@
 package item.menu.view;
 
-import item.menu.entity.Menu;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

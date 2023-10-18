@@ -1,6 +1,5 @@
 package item.menu.view;
 
-import item.menu.entity.MainMenuImpl;
 import item.menu.entity.Menu;
 
 import java.util.ArrayList;
@@ -30,10 +29,10 @@ public class MenuView {
 
     public static void initMenu() {
         if (menus.isEmpty()) {
-            menus.add(new MainMenuImpl.Builder().name("Burgers").description("앵거스 비프 통살을 다져 만든 버거").build());
-            menus.add(new MainMenuImpl.Builder().name("Forzen Custard").description("매장에서 신선하게 만드는 아이스크림").build());
-            menus.add(new MainMenuImpl.Builder().name("Drinks").description("매장에서 직접 만드는 음료").build());
-            menus.add(new MainMenuImpl.Builder().name("Beer").description("뉴욕 브루클린 브루어리에서 양조한 맥주").build());
+            menus.add(new Menu.Builder().name("Burgers").description("앵거스 비프 통살을 다져 만든 버거").build());
+            menus.add(new Menu.Builder().name("Forzen Custard").description("매장에서 신선하게 만드는 아이스크림").build());
+            menus.add(new Menu.Builder().name("Drinks").description("매장에서 직접 만드는 음료").build());
+            menus.add(new Menu.Builder().name("Beer").description("뉴욕 브루클린 브루어리에서 양조한 맥주").build());
         }
     }
 
