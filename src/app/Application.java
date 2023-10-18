@@ -1,18 +1,38 @@
 package app;
 
-public class Application {
+import item.menu.view.MenuView;
+
+import java.util.Scanner;
+
+public class Application implements AutoCloseable {
     private static Application instance;
 
-    private Application() {}
+    private final Scanner scn = new Scanner(System.in);
 
-    public static Application getInstance(){
-        if(instance == null){
+    private Application() {
+    }
+
+    public static Application getInstance() {
+        if (instance == null) {
             instance = new Application();
         }
         return instance;
     }
 
-    public void runKiosk(){
+    public Scanner getScn() {
+        return scn;
+    }
 
+    public void runKiosk() throws Exception {
+        MenuView.printMenu();
+
+        String menuInput = scn.next();
+        System.out.println("입력 사용자 값 == " + menuInput);
+    }
+
+    @Override
+    public void close() throws RuntimeException {
+        System.out.println("close");
+        throw new IllegalStateException();
     }
 }
