@@ -17,6 +17,6 @@ public class MenuController {
     }
 
     public String getMenus() {
-        return menuService.getMenus(menuView);
+        return menuService.getMenusStr(menuView);
     }
 }

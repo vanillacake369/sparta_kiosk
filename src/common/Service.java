@@ -1,5 +1,5 @@
 package common;
 
 public interface Service {
-    String getMenus(View menuView);
+    String getMenusStr(View menuView);
 }
