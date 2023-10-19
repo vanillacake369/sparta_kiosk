@@ -39,20 +39,44 @@ public enum ProductMenuType {
     ),
     FORZEN_CUSTARD(2, "Forzen Custard", "매장에서 신선하게 만드는 아이스크림",
             Arrays.asList(
-                    new Product.Builder().build(),
-                    new Product.Builder().build()
+                    new Product.Builder()
+                            .name("메로나")
+                            .description("올 때 메로나")
+                            .price(1.2)
+                            .build(),
+                    new Product.Builder()
+                            .name("바밤바")
+                            .description("바밤~바. 밤맛나는. 바밤~바")
+                            .price(1.3)
+                            .build()
             )
     ),
     DRINKS(3, "Drinks", "매장에서 직접 만드는 음료",
             Arrays.asList(
-                    new Product.Builder().build(),
-                    new Product.Builder().build()
+                    new Product.Builder()
+                            .name("제로콜라")
+                            .description("이제 없으면 못 살아요 제로콜라")
+                            .price(4.5)
+                            .build(),
+                    new Product.Builder()
+                            .name("방금 따온 오렌지 주스")
+                            .description("거짓말같죠? 진짜 방금 따옴")
+                            .price(5.0)
+                            .build()
             )
     ),
     BEER(4, "Beer", "뉴욕 브루클린 브루어리에서 양조한 맥주",
             Arrays.asList(
-                    new Product.Builder().build(),
-                    new Product.Builder().build()
+                    new Product.Builder()
+                            .name("수제JPA")
+                            .description("JPA라거, 근데 이제 Hibernate를 곁들인")
+                            .price(4.5)
+                            .build(),
+                    new Product.Builder()
+                            .name("수제JWT")
+                            .description("JWT라거, 근데 이제 OAuth를 곁들인")
+                            .price(5.0)
+                            .build()
             )
     ),
     NONE(-1, "None", "없음", Collections.EMPTY_LIST);
