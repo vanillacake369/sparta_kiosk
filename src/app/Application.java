@@ -6,7 +6,10 @@ import item.menu.service.MenuService;
 import item.menu.view.MenuView;
 import item.product.entity.Bucket;
 import item.product.entity.Product;
+import order.controller.OrderController;
 import order.entity.OrderState;
+import order.service.OrderService;
+import order.view.OrderView;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -18,9 +21,16 @@ public class Application implements AutoCloseable {
 
     private final static Bucket bucket = Bucket.getInstance(); // 장바구니
     private final static Scanner scn = new Scanner(System.in); // 사용자 입출력
-    private final static MenuService menuService = new MenuService(); // 메뉴 서비스 
-    private final static MenuView menuView = new MenuView(); // 메뉴 뷰
-    private final static MenuController menuController = new MenuController(menuService, menuView); // 메뉴 컨틀롤러 <- 메뉴 서비스, 메뉴 뷰 주입
+    private final static MenuView menuView = new MenuView();
+    /* Menu */
+    private final static MenuService menuService = new MenuService();
+    private final static MenuController menuController = new MenuController(scn, menuService, menuView);
+
+    /* Order */
+    private final static OrderService orderService = new OrderService();
+    private final static OrderView orderView = new OrderView();
+
+    private final static OrderController orderController = new OrderController(scn, orderService, orderView);
 
     private Application() {
     }
@@ -40,60 +50,21 @@ public class Application implements AutoCloseable {
 
     /* 키오스크 프로그램 메인 함수 */
     public void runKiosk() throws Exception {
-        // 카테고리 메뉴 출력 => Controller & View
+        // 카테고리 메뉴 출력 => Menu Controller & View
         String menus = menuController.getMenus();
         System.out.println(menus);
 
-        // 카테고리 메뉴 사용자 선택 => Application
+        // 카테고리 메뉴 사용자 선택
         int menuInput = scn.nextInt();
         System.out.println("사용자 선택 옵션 : " + menuInput);
 
         // 카테고리 메뉴 사용자 선택 예외처리 =>
-        if (menuInput > OrderState.values().length + ProductType.values().length) {
-            System.out.println("없는 옵션을 선택하셨습니다. 다시 입력해주세요");
-            System.out.println();
+        if (isValidOption(menuInput) != true)
             return;
-        }
 
-        // 구매
+        // 구매 => Order Controller & View
         if (0 < menuInput && menuInput < ProductType.values().length) {
-
-            // 상품 메뉴 출력
-            String productMenus = menuController.getProductMenus(menuInput);
-            System.out.println(productMenus);
-
-            // 상품 메뉴 선택
-            int productInput = scn.nextInt();
-            System.out.println(productInput);
-
-            // 상품 선택
-            Product product = Arrays.stream(ProductType.values())
-                    .filter(p -> p.getSeq() == menuInput)
-                    .map(p -> p.getItems().get(productInput - 1))// index로 가져오므로 -1
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-
-            // 장바구니 추가 여부 출력
-            System.out.println(product.toString());
-            System.out.println("위 메뉴를 장바구니에 추가하겠습니까?");
-            AtomicInteger orderOptionSeq = new AtomicInteger(1);
-            String orderOptions = Arrays.stream(OrderState.values()).map(orderState -> orderOptionSeq.getAndIncrement() + orderState.getText()).collect(Collectors.joining());
-            System.out.println(orderOptions);
-
-            // 장바구니 추가 여부 입력
-            int orderInput = scn.nextInt();
-            System.out.println(orderInput);
-
-            // 추가 로직
-            if (orderInput == 1) {
-                System.out.println("장바구니에 추가");
-                bucket.addProduct(product);
-                String bucketState = bucket.showBucket();
-                System.out.println(bucketState);
-            }
-            if (orderInput == 2) {
-                System.out.println("주문 취소");
-            }
+            orderController.doOrder(bucket, menuController, menuInput);
         }
 
         // 주문
@@ -113,6 +84,15 @@ public class Application implements AutoCloseable {
                 // return void;
             }
         }
+    }
+
+    private static boolean isValidOption(int menuInput) {
+        if (menuInput > OrderState.values().length + ProductType.values().length) {
+            System.out.println("없는 옵션을 선택하셨습니다. 다시 입력해주세요");
+            System.out.println();
+            return false;
+        }
+        return true;
     }
 
     /* 객체 자동 메모리 삭제 함수 */

@@ -1,6 +1,5 @@
 package item.menu.view;
 
-import common.View;
 import item.product.entity.ProductType;
 import item.product.entity.Product;
 import order.entity.OrderState;
@@ -10,13 +9,12 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class MenuView implements View {
+public class MenuView {
     // 환영 메세지
     private final static String welcomeText = "\"SHAKESHACK BURGER 에 오신걸 환영합니다.\"\n" +
             "아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n";
 
 
-    @Override
     public String getWholeMenuView() {
         // 전체 메뉴판 문자열
         StringBuilder wholeMenu = new StringBuilder(welcomeText);
@@ -40,7 +38,6 @@ public class MenuView implements View {
         return wholeMenu.toString();
     }
 
-    @Override
     public String getProductMenusView(int menuInput) throws Exception {
         ProductType productMenus = Arrays.stream(ProductType.values())
                 .filter(productMenuType -> productMenuType.getSeq() == menuInput)
