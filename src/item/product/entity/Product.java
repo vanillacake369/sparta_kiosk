@@ -18,20 +18,16 @@ public class Product implements Item {
     private Product() {
     }
 
+    @Override
+    public String toString() {
+        return String.format("%-15s | W %s | %s", this.name, this.price, this.description);
+    }
 
     /* Builder로 Product 생성 */
     private Product(Builder builder) {
         this.name = builder.name;
         this.description = builder.description;
         this.price = builder.price;
-    }
-
-    /* 메뉴판에 출력을 위한 toString 오버라이딩 */
-    @Override
-    public String toString() {
-        return name + "         |   "
-                + description + "         |   "
-                + price + "\n";
     }
 
     @Override

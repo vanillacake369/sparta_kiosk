@@ -19,4 +19,5 @@ public enum OrderState {
     public String getText() {
         return text;
     }
+
 }

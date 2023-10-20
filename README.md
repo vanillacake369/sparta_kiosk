@@ -12,7 +12,7 @@
     - Product : 상품 구현체
         - ProductType : 상품 타입
         - Bucket : 상품 장바구니
-- Order < Interface > : 주문
+- Order < Interface > : 주문 / 장바구니
     - OrderImpl : 주문 구현체
     - OrderState : 주문 상태(==주문 타입)
 ```

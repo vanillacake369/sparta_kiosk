@@ -17,10 +17,12 @@ public class MenuController {
         this.menuView = menuView;
     }
 
+    // (상품 + 주문 ) 전체 메뉴 문자열
     public String getMenusView() throws Exception {
         return menuView.getWholeMenuView();
     }
 
+    // 상품 메뉴 문자열 반환
     public String getProductMenusView(int menuInput) throws Exception {
         return menuView.getProductMenusView(menuInput);
     }

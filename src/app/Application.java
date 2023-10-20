@@ -5,16 +5,12 @@ import item.product.entity.ProductType;
 import item.menu.service.MenuService;
 import item.menu.view.MenuView;
 import item.product.entity.Bucket;
-import item.product.entity.Product;
 import order.controller.OrderController;
 import order.entity.OrderState;
 import order.service.OrderService;
 import order.view.OrderView;
 
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class Application implements AutoCloseable {
     private static Application instance; // 앱 싱글톤 객체
@@ -31,6 +27,9 @@ public class Application implements AutoCloseable {
     private final static OrderView orderView = new OrderView();
 
     private final static OrderController orderController = new OrderController(scn, orderService, orderView);
+
+    /* 대기번호 */
+    private static Long waitingNumber = 0L;
 
     private Application() {
     }
@@ -59,26 +58,22 @@ public class Application implements AutoCloseable {
 
         // 구매 옵션인 경우 구매 진행 => Order
         if (0 < menuInput && menuInput < ProductType.values().length) {
+            // 상품 선택
             int productInput = menuController.getProductInput(menuInput);
-            orderController.doOrder(bucket, menuInput, productInput);
+            // 장바구니에 추가 혹은 재주문
+            orderController.addProduct(bucket, menuInput, productInput);
         }
 
-        // 주문 => Order
-        if (menuInput > ProductType.values().length) {
-            if (menuInput == ProductType.values().length + 1) { // 주문 시작
-                System.out.println("주문 시작");
-                // 주문시작 뷰 
-                // 주문 옵션 / 메뉴판 옵션 선택
-                // 선택에 따른 로직 / 뷰 구현 :: 대기번호 출력 / 장바구니 비우기 / 3초 딜레이
-                // return void;
-            }
+        // 주문 시작 => Order
+        if (menuInput == ProductType.values().length + 1) {
+            // 주문 실행 ::
+            waitingNumber = orderController.doOrder(bucket, waitingNumber);
+        }
 
-            if (menuInput == ProductType.values().length + 2) { // 주문 취소
-                System.out.println("주문 취소");
-                // 주문취소 뷰 
-                // 장바구니 비우기
-                // return void;
-            }
+        // 주문 시작
+        if (menuInput == ProductType.values().length + 2) {
+            // 주문 취소 ::
+            orderController.cancelOrder(bucket);
         }
     }
 

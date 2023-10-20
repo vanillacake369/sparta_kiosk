@@ -4,6 +4,7 @@ import item.product.entity.Bucket;
 import item.product.entity.Product;
 import item.product.entity.ProductType;
 import order.entity.OrderState;
+import order.view.OrderView;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,17 +24,18 @@ public class OrderService {
         System.out.println(product.toString());
         System.out.println("위 메뉴를 장바구니에 추가하겠습니까?");
         AtomicInteger orderOptionSeq = new AtomicInteger(1);
-        String orderOptions = Arrays.stream(OrderState.values()).map(orderState -> orderOptionSeq.getAndIncrement() + orderState.getText()).collect(Collectors.joining());
+        String orderOptions = Arrays.stream(OrderState.values())
+                .map(orderState -> String.format("%s. %s    ",
+                        orderOptionSeq.getAndIncrement(),
+                        orderState.getText()))
+                .collect(Collectors.joining());
         System.out.println(orderOptions);
     }
 
     public void addProductToBucket(Bucket bucket, Product product) {
-        System.out.println("장바구니에 추가");
         bucket.addProduct(product);
-        String bucketState = bucket.showBucket();
-        System.out.println("현재 장바구니 목록 ");
-        System.out.println("==================");
-        System.out.print(bucketState);
-        System.out.println("==================");
+        OrderView.showBucketStatus(bucket);
     }
+
+
 }
