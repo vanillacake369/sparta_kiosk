@@ -1,6 +1,5 @@
 package app;
 
-import item.Item;
 import item.menu.controller.MenuController;
 import item.menu.entity.ProductMenuType;
 import item.menu.service.MenuService;
@@ -11,6 +10,8 @@ import order.entity.OrderState;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class Application implements AutoCloseable {
     private static Application instance; // 앱 싱글톤 객체
@@ -47,9 +48,16 @@ public class Application implements AutoCloseable {
         int menuInput = scn.nextInt();
         System.out.println("사용자 선택 옵션 : " + menuInput);
 
-        if (menuInput > OrderState.values().length + ProductMenuType.values().length) { // 카테고리 메뉴 사용자 선택 예외처리
-            System.out.println("없는 옵션을 선택하셨습니다.");
-        } else {
+        // 카테고리 메뉴 사용자 선택 예외처리
+        if (menuInput > OrderState.values().length + ProductMenuType.values().length) {
+            System.out.println("없는 옵션을 선택하셨습니다. 다시 입력해주세요");
+            System.out.println();
+            return;
+        }
+
+        // 구매
+        if (0 < menuInput && menuInput < ProductMenuType.values().length) {
+
             // 상품 메뉴 출력
             String productMenus = menuController.getProductMenus(menuInput);
             System.out.println(productMenus);
@@ -65,11 +73,18 @@ public class Application implements AutoCloseable {
                     .findFirst()
                     .orElseThrow(IllegalArgumentException::new);
 
-            // 장바구니 추가 여부 
+            // 장바구니 추가 여부 출력
             System.out.println(product.toString());
             System.out.println("위 메뉴를 장바구니에 추가하겠습니까?");
+            AtomicInteger orderOptionSeq = new AtomicInteger(1);
+            String orderOptions = Arrays.stream(OrderState.values()).map(orderState -> orderOptionSeq.getAndIncrement() + orderState.getText()).collect(Collectors.joining());
+            System.out.println(orderOptions);
+
+            // 장바구니 추가 여부 입력
             int orderInput = scn.nextInt();
             System.out.println(orderInput);
+
+            // 추가 로직
             if (orderInput == 1) {
                 System.out.println("장바구니에 추가");
                 bucket.addProduct(product);
@@ -79,7 +94,14 @@ public class Application implements AutoCloseable {
             if (orderInput == 2) {
                 System.out.println("주문 취소");
             }
+        }
 
+        // 주문
+        if (menuInput > ProductMenuType.values().length) {
+            if (menuInput == ProductMenuType.values().length + 1)
+                System.out.println("주문 시작");
+            if (menuInput == ProductMenuType.values().length + 2)
+                System.out.println("주문 취소");
         }
     }
 

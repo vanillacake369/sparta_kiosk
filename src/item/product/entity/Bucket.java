@@ -2,6 +2,7 @@ package item.product.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /* 장바구니 */
 public class Bucket {
@@ -33,7 +34,8 @@ public class Bucket {
         bucket.clear();
     }
 
+
     public static String showBucket() {
-        return bucket.toString();
+        return bucket.stream().map(product -> product.toString()).collect(Collectors.joining());
     }
 }
