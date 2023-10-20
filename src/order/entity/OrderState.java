@@ -1,7 +1,5 @@
 package order.entity;
 
-import item.menu.entity.ProductMenuType;
-
 public enum OrderState {
     CONFIRM("확인", "장바구니를 확인 후 주문합니다."),
     CANCEL("취소", "진행 중인 주문을 취소합니다.");

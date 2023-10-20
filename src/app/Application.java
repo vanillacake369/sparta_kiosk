@@ -1,7 +1,7 @@
 package app;
 
 import item.menu.controller.MenuController;
-import item.menu.entity.ProductMenuType;
+import item.product.entity.ProductType;
 import item.menu.service.MenuService;
 import item.menu.view.MenuView;
 import item.product.entity.Bucket;
@@ -40,23 +40,23 @@ public class Application implements AutoCloseable {
 
     /* 키오스크 프로그램 메인 함수 */
     public void runKiosk() throws Exception {
-        // 카테고리 메뉴 출력
+        // 카테고리 메뉴 출력 => Controller & View
         String menus = menuController.getMenus();
         System.out.println(menus);
 
-        // 카테고리 메뉴 사용자 선택
+        // 카테고리 메뉴 사용자 선택 => Application
         int menuInput = scn.nextInt();
         System.out.println("사용자 선택 옵션 : " + menuInput);
 
-        // 카테고리 메뉴 사용자 선택 예외처리
-        if (menuInput > OrderState.values().length + ProductMenuType.values().length) {
+        // 카테고리 메뉴 사용자 선택 예외처리 =>
+        if (menuInput > OrderState.values().length + ProductType.values().length) {
             System.out.println("없는 옵션을 선택하셨습니다. 다시 입력해주세요");
             System.out.println();
             return;
         }
 
         // 구매
-        if (0 < menuInput && menuInput < ProductMenuType.values().length) {
+        if (0 < menuInput && menuInput < ProductType.values().length) {
 
             // 상품 메뉴 출력
             String productMenus = menuController.getProductMenus(menuInput);
@@ -67,7 +67,7 @@ public class Application implements AutoCloseable {
             System.out.println(productInput);
 
             // 상품 선택
-            Product product = Arrays.stream(ProductMenuType.values())
+            Product product = Arrays.stream(ProductType.values())
                     .filter(p -> p.getSeq() == menuInput)
                     .map(p -> p.getItems().get(productInput - 1))// index로 가져오므로 -1
                     .findFirst()
@@ -97,11 +97,21 @@ public class Application implements AutoCloseable {
         }
 
         // 주문
-        if (menuInput > ProductMenuType.values().length) {
-            if (menuInput == ProductMenuType.values().length + 1)
+        if (menuInput > ProductType.values().length) {
+            if (menuInput == ProductType.values().length + 1) { // 주문 시작
                 System.out.println("주문 시작");
-            if (menuInput == ProductMenuType.values().length + 2)
+                // 주문시작 뷰 
+                // 주문 옵션 / 메뉴판 옵션 선택
+                // 선택에 따른 로직 / 뷰 구현 :: 대기번호 출력 / 장바구니 비우기 / 3초 딜레이
+                // return void;
+            }
+
+            if (menuInput == ProductType.values().length + 2) { // 주문 취소
                 System.out.println("주문 취소");
+                // 주문취소 뷰 
+                // 장바구니 비우기
+                // return void;
+            }
         }
     }
 

@@ -2,13 +2,8 @@ package item.menu.view;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import item.menu.entity.ProductMenuType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 class MenuViewTest {
     final MenuView menuView = new MenuView();

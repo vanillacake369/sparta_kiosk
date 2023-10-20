@@ -1,7 +1,7 @@
 package item.menu.view;
 
 import common.View;
-import item.menu.entity.ProductMenuType;
+import item.product.entity.ProductType;
 import item.product.entity.Product;
 import order.entity.OrderState;
 
@@ -20,11 +20,11 @@ public class MenuView implements View {
     public String getWholeMenuView() {
         // 전체 메뉴판 문자열
         StringBuilder wholeMenu = new StringBuilder(welcomeText);
-        AtomicInteger orderOptionStartSeq = new AtomicInteger(ProductMenuType.values().length + 1);
+        AtomicInteger orderOptionStartSeq = new AtomicInteger(ProductType.values().length + 1);
 
         // 상품 메뉴들 추가
         wholeMenu.append("\n[ SHAKESHACK MENU ]\n");
-        String productMenus = Arrays.stream(ProductMenuType.values())
+        String productMenus = Arrays.stream(ProductType.values())
                 .map(p -> p.getSeq() + ". " + p.getName() + "       |   " + p.getDescription() + "\n")
                 .collect(Collectors.joining());
         wholeMenu.append(productMenus);
@@ -42,7 +42,7 @@ public class MenuView implements View {
 
     @Override
     public String getProductMenusView(int menuInput) throws Exception {
-        ProductMenuType productMenus = Arrays.stream(ProductMenuType.values())
+        ProductType productMenus = Arrays.stream(ProductType.values())
                 .filter(productMenuType -> productMenuType.getSeq() == menuInput)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 메뉴는 메뉴판에 없는 메뉴입니다."));

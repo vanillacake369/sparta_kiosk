@@ -1,12 +1,11 @@
-package item.menu.entity;
+package item.product.entity;
 
 import item.product.entity.Product;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-public enum ProductMenuType {
+public enum ProductType {
     BURGERS(1, "Burgers", "앵거스 비프 통살을 다져만든 버거",
             Arrays.asList(
                     new Product.Builder()
@@ -86,7 +85,7 @@ public enum ProductMenuType {
     private String description;
     private List<Product> items;
 
-    ProductMenuType(int seq, String name, String description, List<Product> items) {
+    ProductType(int seq, String name, String description, List<Product> items) {
         this.seq = seq;
         this.name = name;
         this.description = description;

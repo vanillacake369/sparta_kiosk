@@ -1,18 +1,19 @@
 package item.menu.entity;
 
 import item.Item;
+import item.product.entity.ProductType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProductMenuTypeTest {
+class ProductTypeTest {
     @Test
     @DisplayName("ProductType 호출 시 새로운 Product List 가 계속 생성됩니다.")
     public void keepCreatingNewProducts() throws Exception {
         // GIVEN
-        ProductMenuType burgers1 = ProductMenuType.BURGERS;
-        ProductMenuType burgers2 = ProductMenuType.BURGERS;
+        ProductType burgers1 = ProductType.BURGERS;
+        ProductType burgers2 = ProductType.BURGERS;
 
         // WHEN
         Item item1 = burgers1.getItems().get(0);
