@@ -1,7 +1,6 @@
 package order.controller;
 
 import item.product.entity.Bucket;
-import item.product.entity.Product;
 import item.product.entity.ProductType;
 import order.service.OrderService;
 import order.view.OrderView;
@@ -33,7 +32,7 @@ class OrderControllerTest {
 
         // WHEN
         try {
-            waitingNum = orderController.clearOrder(bucket, waitingNum, 1);
+            waitingNum = orderController.handleOrder(bucket, waitingNum, 1);
         } catch (Exception e) {
         }
 

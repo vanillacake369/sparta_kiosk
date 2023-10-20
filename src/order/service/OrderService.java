@@ -20,21 +20,11 @@ public class OrderService {
                 .orElseThrow(() -> new IllegalArgumentException("찾으시는 상품이 없습니다.")); // 없다면 IllegalArgumentException 예외 던짐
     }
 
-    public void getAskingAddBucketView(Product product) {
-        System.out.println(product.toString());
-        System.out.println("위 메뉴를 장바구니에 추가하겠습니까?");
-        AtomicInteger orderOptionSeq = new AtomicInteger(1);
-        String orderOptions = Arrays.stream(OrderState.values())
-                .map(orderState -> String.format("%s. %s    ",
-                        orderOptionSeq.getAndIncrement(),
-                        orderState.getText()))
-                .collect(Collectors.joining());
-        System.out.println(orderOptions);
-    }
 
+    // 실제 장바구니에 제품 추가
     public void addProductToBucket(Bucket bucket, Product product) {
-        bucket.addProduct(product);
-        OrderView.showBucketStatus(bucket);
+        bucket.addProduct(product); // 장바구니에 제품 추가
+        OrderView.showBucketStatus(bucket); // 주어진 뷰 포맷에 따라 장바구니 상태 출력
     }
 
 
