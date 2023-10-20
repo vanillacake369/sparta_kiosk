@@ -1,9 +1,7 @@
 package common;
 
-import item.Item;
-
-import java.util.List;
-
 public interface View {
-    String getView(List<Item> menus, Long productMenuSize, Long orderMenuSize);
+    public String getWholeMenuView() throws Exception;
+
+    String getProductMenusView(int menuInput) throws Exception;
 }

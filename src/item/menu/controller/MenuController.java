@@ -7,16 +7,16 @@ public class MenuController {
     Service menuService;
     View menuView;
 
-    public MenuController(View menuView) {
-        this.menuView = menuView;
-    }
-
     public MenuController(Service menuService, View menuView) {
         this.menuService = menuService;
         this.menuView = menuView;
     }
 
-    public String getMenus() {
-        return menuService.getMenusStr(menuView);
+    public String getMenus() throws Exception {
+        return menuView.getWholeMenuView();
+    }
+
+    public String getProductMenus(int menuInput) throws Exception {
+        return menuView.getProductMenusView(menuInput);
     }
 }

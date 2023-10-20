@@ -1,6 +1,5 @@
 package item.menu.entity;
 
-import item.Item;
 import item.product.entity.Product;
 
 import java.util.Arrays;
@@ -78,27 +77,28 @@ public enum ProductMenuType {
                             .price(5.0)
                             .build()
             )
-    ),
-    NONE(-1, "None", "없음", Collections.EMPTY_LIST);
+    );
+//    NONE(-1, "None", "없음", Collections.EMPTY_LIST);
 
 
     private int seq;
     private String name;
     private String description;
-    private List<Item> items;
+    private List<Product> items;
 
-    ProductMenuType(int seq, String name, String description, List<Item> items) {
+    ProductMenuType(int seq, String name, String description, List<Product> items) {
         this.seq = seq;
         this.name = name;
+        this.description = description;
         this.items = items;
     }
 
-    public static ProductMenuType findByProductName(String name) {
-        return Arrays.stream(ProductMenuType.values())
-                .filter(p -> p.hasName(name))
-                .findFirst()
-                .orElse(NONE);
-    }
+//    public static ProductMenuType findByProductName(String name) {
+//        return Arrays.stream(ProductMenuType.values())
+//                .filter(p -> p.hasName(name))
+//                .findFirst()
+//                .orElse(NONE);
+//    }
 
     public boolean hasName(String name) {
         return items.stream().anyMatch(i -> i.getName().equals(name));
@@ -116,7 +116,7 @@ public enum ProductMenuType {
         return description;
     }
 
-    public List<Item> getItems() {
+    public List<Product> getItems() {
         return items;
     }
 }
