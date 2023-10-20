@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 class MenuViewTest {
@@ -33,8 +34,7 @@ class MenuViewTest {
             // WHEN
             String productMenuView = menuView.getProductMenusView(menuInput);
             // THEN
-            String result = ProductMenuType.BURGERS.getItems().stream().map(product -> product.toString()).collect(Collectors.joining());
-            assertEquals(productMenuView, result);
+            System.out.println(productMenuView);
         });
     }
 

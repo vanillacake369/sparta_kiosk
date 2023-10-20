@@ -32,4 +32,8 @@ public class Bucket {
     public static void removeAll() {
         bucket.clear();
     }
+
+    public static String showBucket() {
+        return bucket.toString();
+    }
 }

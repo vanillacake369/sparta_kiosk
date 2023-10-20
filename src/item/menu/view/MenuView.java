@@ -47,7 +47,9 @@ public class MenuView implements View {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 메뉴는 메뉴판에 없는 메뉴입니다."));
         List<Product> items = productMenus.getItems();
-        String productMenuStr = items.stream().map(product -> product.toString()).collect(Collectors.joining());
+        AtomicInteger productOptionStartSeq = new AtomicInteger(1);
+
+        String productMenuStr = items.stream().map(product -> productOptionStartSeq.getAndIncrement() + ". " + product.toString()).collect(Collectors.joining());
 
         return welcomeText + productMenuStr;
     }

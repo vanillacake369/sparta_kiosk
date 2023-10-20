@@ -6,6 +6,7 @@ import item.menu.entity.ProductMenuType;
 import item.menu.service.MenuService;
 import item.menu.view.MenuView;
 import item.product.entity.Bucket;
+import item.product.entity.Product;
 import order.entity.OrderState;
 
 import java.util.Arrays;
@@ -38,34 +39,46 @@ public class Application implements AutoCloseable {
 
     /* 키오스크 프로그램 메인 함수 */
     public void runKiosk() throws Exception {
+        // 카테고리 메뉴 출력
         String menus = menuController.getMenus();
         System.out.println(menus);
+
+        // 카테고리 메뉴 사용자 선택
         int menuInput = scn.nextInt();
         System.out.println("사용자 선택 옵션 : " + menuInput);
 
-        // 예외처리
-        if (menuInput > OrderState.values().length + ProductMenuType.values().length) {
+        if (menuInput > OrderState.values().length + ProductMenuType.values().length) { // 카테고리 메뉴 사용자 선택 예외처리
             System.out.println("없는 옵션을 선택하셨습니다.");
         } else {
             // 상품 메뉴 출력
             String productMenus = menuController.getProductMenus(menuInput);
             System.out.println(productMenus);
 
+            // 상품 메뉴 선택
             int productInput = scn.nextInt();
-
             System.out.println(productInput);
 
             // 상품 선택
-            try (Item item = Arrays.stream(ProductMenuType.values())
+            Product product = Arrays.stream(ProductMenuType.values())
                     .filter(p -> p.getSeq() == menuInput)
-                    .map(p -> p.getItems().get(productInput))
+                    .map(p -> p.getItems().get(productInput - 1))// index로 가져오므로 -1
                     .findFirst()
-                    .orElseThrow(IllegalArgumentException::new)) {
-                System.out.println(item.toString());
-                System.out.println("위 메뉴를 장바구니에 추가하겠습니까?");
-                System.out.println(OrderState.CONFIRM.getText());
-            }
+                    .orElseThrow(IllegalArgumentException::new);
 
+            // 장바구니 추가 여부 
+            System.out.println(product.toString());
+            System.out.println("위 메뉴를 장바구니에 추가하겠습니까?");
+            int orderInput = scn.nextInt();
+            System.out.println(orderInput);
+            if (orderInput == 1) {
+                System.out.println("장바구니에 추가");
+                bucket.addProduct(product);
+                String bucketState = bucket.showBucket();
+                System.out.println(bucketState);
+            }
+            if (orderInput == 2) {
+                System.out.println("주문 취소");
+            }
 
         }
     }
