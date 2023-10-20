@@ -17,15 +17,14 @@ public class Application implements AutoCloseable {
 
     private final static Bucket bucket = Bucket.getInstance(); // 장바구니
     private final static Scanner scn = new Scanner(System.in); // 사용자 입출력
-    private final static MenuView menuView = new MenuView();
     /* Menu */
+    private final static MenuView menuView = new MenuView();
     private final static MenuService menuService = new MenuService();
     private final static MenuController menuController = new MenuController(scn, menuService, menuView);
 
     /* Order */
     private final static OrderService orderService = new OrderService();
     private final static OrderView orderView = new OrderView();
-
     private final static OrderController orderController = new OrderController(scn, orderService, orderView);
 
     /* 대기번호 */
@@ -49,7 +48,7 @@ public class Application implements AutoCloseable {
 
     /* 키오스크 프로그램 메인 함수 */
     public void runKiosk() throws Exception {
-        // 카테고리 메뉴 사용자 선택 => Menu
+        // 카테고리 메뉴 출력 후, 메뉴 선택 => Menu
         int menuInput = menuController.getMenuInput();
 
         // 카테고리 선택 예외처리 

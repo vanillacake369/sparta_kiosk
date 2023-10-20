@@ -1,11 +1,21 @@
 package item.product.entity;
 
-import item.product.entity.Product;
-
 import java.util.Arrays;
 import java.util.List;
 
 public enum ProductType {
+    /**
+     * 아래와 같이 JSON 형식처럼 하였습니다.
+     *
+     * { 카테고리 : ~~
+     *      { 상품1 : }
+     *      { 상품2 : }
+     *      ,,,
+     * }
+     *
+     * 이렇게 한 이유는, 추후에 상품에 대한 TYPE이 어떤 TYPE인지 확인하는 기능을 추가하고자 했습니다.
+     * 가령, ShackBurger 같은 경우, BURGERS에 해당하는데, findTypeByProductName()를 통해 type을 찾을 수 있습니다.
+     */
     BURGERS(1, "Burgers", "앵거스 비프 통살을 다져만든 버거",
             Arrays.asList(
                     new Product.Builder()
@@ -77,8 +87,6 @@ public enum ProductType {
                             .build()
             )
     );
-//    NONE(-1, "None", "없음", Collections.EMPTY_LIST);
-
 
     private int seq;
     private String name;
@@ -92,12 +100,12 @@ public enum ProductType {
         this.items = items;
     }
 
-//    public static ProductMenuType findByProductName(String name) {
-//        return Arrays.stream(ProductMenuType.values())
-//                .filter(p -> p.hasName(name))
-//                .findFirst()
-//                .orElse(NONE);
-//    }
+    public static ProductType findTypeByProductName(String name) throws Exception {
+        return Arrays.stream(ProductType.values())
+                .filter(p -> p.hasName(name))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("찾고자 하는 상품의 type이 존재하지 않습니다."));
+    }
 
     public boolean hasName(String name) {
         return items.stream().anyMatch(i -> i.getName().equals(name));

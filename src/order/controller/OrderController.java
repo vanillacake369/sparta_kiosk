@@ -76,9 +76,6 @@ public class OrderController {
      * - 장바구니 bucket :: Bucket
      * - 대기번호 waintingNumber :: Long
      *
-     * @exception
-     * 옵션이 옵션상태보다 큰 경우 예외를 반환합니다.
-     *
      * @param bucket
      * @param waitingNumber
      * @param check
