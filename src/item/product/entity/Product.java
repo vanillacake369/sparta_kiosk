@@ -31,7 +31,7 @@ public class Product implements Item {
     public String toString() {
         return name + "         |   "
                 + description + "         |   "
-                + price + "         |   " + "\n";
+                + price + "\n";
     }
 
     @Override

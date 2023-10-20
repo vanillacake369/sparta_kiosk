@@ -1,6 +1,5 @@
 package item.menu.controller;
 
-import item.menu.entity.Menu;
 import item.menu.service.MenuService;
 import item.menu.view.MenuView;
 
@@ -18,11 +17,31 @@ public class MenuController {
         this.menuView = menuView;
     }
 
-    public String getMenus() throws Exception {
+    public String getMenusView() throws Exception {
         return menuView.getWholeMenuView();
     }
 
-    public String getProductMenus(int menuInput) throws Exception {
+    public String getProductMenusView(int menuInput) throws Exception {
         return menuView.getProductMenusView(menuInput);
+    }
+
+    public int getProductInput(int menuInput) throws Exception {
+        // 상품 메뉴 출력
+        String productMenus = getProductMenusView(menuInput);
+        System.out.println(productMenus);
+
+        // 상품 메뉴 선택
+        int productInput = scn.nextInt();
+        return productInput;
+    }
+
+    public int getMenuInput() throws Exception {
+        // 카테고리 메뉴 출력 => Menu Controller & View
+        String menus = getMenusView();
+        System.out.println(menus);
+
+        // 카테고리 메뉴 사용자 선택
+        int menuInput = scn.nextInt();
+        return menuInput;
     }
 }

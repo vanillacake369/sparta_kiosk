@@ -50,24 +50,20 @@ public class Application implements AutoCloseable {
 
     /* 키오스크 프로그램 메인 함수 */
     public void runKiosk() throws Exception {
-        // 카테고리 메뉴 출력 => Menu Controller & View
-        String menus = menuController.getMenus();
-        System.out.println(menus);
+        // 카테고리 메뉴 사용자 선택 => Menu
+        int menuInput = menuController.getMenuInput();
 
-        // 카테고리 메뉴 사용자 선택
-        int menuInput = scn.nextInt();
-        System.out.println("사용자 선택 옵션 : " + menuInput);
-
-        // 카테고리 메뉴 사용자 선택 예외처리 =>
+        // 카테고리 선택 예외처리 
         if (isValidOption(menuInput) != true)
             return;
 
-        // 구매 => Order Controller & View
+        // 구매 옵션인 경우 구매 진행 => Order
         if (0 < menuInput && menuInput < ProductType.values().length) {
-            orderController.doOrder(bucket, menuController, menuInput);
+            int productInput = menuController.getProductInput(menuInput);
+            orderController.doOrder(bucket, menuInput, productInput);
         }
 
-        // 주문
+        // 주문 => Order
         if (menuInput > ProductType.values().length) {
             if (menuInput == ProductType.values().length + 1) { // 주문 시작
                 System.out.println("주문 시작");
@@ -86,6 +82,12 @@ public class Application implements AutoCloseable {
         }
     }
 
+    /**
+     * 입력 카테고리값이 올바른 입력인지 검증하는 함수
+     * : 주문옵션과 카테고리옵션들의 크기합보다 크다면 valid하지 않으므로 false반환 
+     * @param menuInput
+     * @return
+     */
     private static boolean isValidOption(int menuInput) {
         if (menuInput > OrderState.values().length + ProductType.values().length) {
             System.out.println("없는 옵션을 선택하셨습니다. 다시 입력해주세요");
